@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Sound and the Fury</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .family-tree-scroll {
+      overflow-x: auto;
+      padding: 1.5rem 0;
+    }
+
+    .family-tree,
+    .family-tree ul {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .family-tree {
+      min-width: max-content;
+      text-align: center;
+    }
+
+    .family-tree ul {
+      position: relative;
+      padding-top: 1.75rem;
+    }
+
+    .family-tree li {
+      position: relative;
+      list-style: none;
+      padding: 1.75rem 0.6rem 0;
+    }
+
+    .family-tree li::before,
+    .family-tree li::after {
+      position: absolute;
+      top: 0;
+      right: 50%;
+      width: 50%;
+      height: 1.75rem;
+      border-top: 2px solid #9aa6b2;
+      content: "";
+    }
+
+    .family-tree li::after {
+      right: auto;
+      left: 50%;
+      border-left: 2px solid #9aa6b2;
+    }
+
+    .family-tree li:only-child::before,
+    .family-tree li:only-child::after {
+      display: none;
+    }
+
+    .family-tree li:only-child {
+      padding-top: 0;
+    }
+
+    .family-tree li:first-child::before,
+    .family-tree li:last-child::after {
+      border: 0;
+    }
+
+    .family-tree li:last-child::before {
+      border-right: 2px solid #9aa6b2;
+      border-radius: 0 0.5rem 0 0;
+    }
+
+    .family-tree li:first-child::after {
+      border-radius: 0.5rem 0 0 0;
+    }
+
+    .family-tree .couple-branch::after {
+      height: 3.25rem;
+    }
+
+    .family-tree ul::before {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      height: 1.75rem;
+      border-left: 2px solid #9aa6b2;
+      content: "";
+    }
+
+    .family-tree > li {
+      padding-top: 0;
+    }
+
+    .family-tree > li::before,
+    .family-tree > li::after {
+      display: none;
+    }
+
+    .family-tree .tree-node {
+      display: inline-block;
+      min-width: 7rem;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid #cbd5df;
+      border-radius: 0.65rem;
+      background: #f8fafc;
+      color: #233142;
+      box-shadow: 0 0.15rem 0.4rem rgb(0 0 0 / 8%);
+    }
+
+    .family-tree .couple-node .tree-node {
+      font-weight: 600;
+    }
+
+    .family-tree .tree-node.female {
+      background: #fce8ef;
+    }
+
+    .family-tree .tree-node.male {
+      background: #e4f0fc;
+    }
+
+    .family-tree .couple-node {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: max-content;
+    }
+
+    .family-tree .marriage-link {
+      flex: 0 0 2rem;
+      border-top: 2px solid #9aa6b2;
+    }
+
+    .family-tree .children-generation::before {
+      top: -1.5rem;
+      height: 3.25rem;
+    }
+
+    .family-tree .uncertain {
+      border-style: dashed;
+      border-color: #b07a22;
+      background: #fff8e8;
+    }
+
+    .family-tree .uncertain-branch::before,
+    .family-tree .uncertain-branch::after {
+      border-style: dashed;
+      border-color: #b07a22;
+    }
+
+    .family-tree .uncertain-branch > ul::before {
+      border-left-style: dotted;
+      border-color: #b07a22;
+    }
+
+    .family-tree .uncertain-generation::before {
+      border-left-style: dashed;
+      border-color: #b07a22;
+    }
+
+    .family-tree .uncertain-generation > li {
+      padding-top: 1.75rem;
+    }
+
+    .family-tree .tree-note {
+      display: block;
+      margin-top: 0.2rem;
+      color: #665533;
+      font-size: 0.75rem;
+      font-weight: 400;
+    }
+
+    @media (max-width: 575.98px) {
+      .family-tree-scroll {
+        margin-inline: -0.75rem;
+        padding-inline: 0.25rem;
+      }
+
+      .family-tree li {
+        padding-right: 0.15rem;
+        padding-left: 0.15rem;
+      }
+
+      .family-tree .tree-node {
+        min-width: 3.5rem;
+        max-width: 7.5rem;
+        padding: 0.45rem 0.3rem;
+        font-size: 0.85rem;
+      }
+
+      .family-tree .couple-node {
+        min-width: 0;
+      }
+
+      .family-tree .marriage-link {
+        flex-basis: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="bg-dark text-white py-3">
+    <div class="container">
+      <h1 class="h1 mb-0"><u>The Sound and the Fury</u></h1>
+      <h4 class="h4 mb-0">William Faulkner</h4>
+      <sub><i>A spoiler-light AI-generated guide</i></sub>
+    </div>
+  </header>
+
+  <main class="container py-5">
+    <section id="the-Compson-family" class="mt-5">
+      <h2>The Compson Family</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Character</th>
+            <th>Connection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jason Compson III (“Mr. Compson” / Father)</td>
+            <td>Head of the Compson family; husband of Caroline.</td>
+          </tr>
+          <tr>
+            <td>Caroline Compson (“Mrs. Compson” / “Miss Cahline”)</td>
+            <td>Jason III's wife; sister of Uncle Maury.</td>
+          </tr>
+          <tr>
+            <td>Quentin Compson (the older Quentin)</td>
+            <td>One of the Compson children.</td>
+          </tr>
+          <tr>
+            <td>Candace “Caddy” Compson</td>
+            <td>One of the Compson children.</td>
+          </tr>
+          <tr>
+            <td>Jason Compson IV</td>
+            <td>One of the Compson children; named after his father.</td>
+          </tr>
+          <tr>
+            <td>Benjamin “Benjy” Compson</td>
+            <td>One of the Compson children; originally given another name.</td>
+          </tr>
+          <tr>
+            <td>Miss Quentin (the younger Quentin)</td>
+            <td>A younger member of the Compson family. Her specific family connections are best left for the novel to reveal.</td>
+          </tr>
+          <tr>
+            <td>Uncle Maury Bascomb</td>
+            <td>Caroline's brother; uncle to the Compson children.</td>
+          </tr>
+          <tr>
+            <td>Damuddy</td>
+            <td>A member of the older Compson generation, remembered by the family.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="the-household" class="mt-5">
+      <h2>The Household (Dilsey's Family)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Character</th>
+            <th>Connection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dilsey</td>
+            <td>Works in the Compson household; partner of Roskus and mother of Versh, Frony, and T.P.</td>
+          </tr>
+          <tr>
+            <td>Roskus</td>
+            <td>Dilsey's partner; father of Versh, Frony, and T.P.</td>
+          </tr>
+          <tr>
+            <td>Versh</td>
+            <td>Son of Dilsey and Roskus; brother of Frony and T.P.</td>
+          </tr>
+          <tr>
+            <td>Frony</td>
+            <td>Daughter of Dilsey and Roskus; sister of Versh and T.P.</td>
+          </tr>
+          <tr>
+            <td>T.P.</td>
+            <td>Son of Dilsey and Roskus; brother of Versh and Frony.</td>
+          </tr>
+          <tr>
+            <td>Luster</td>
+            <td>A younger member of Dilsey's family.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="the-household" class="mt-5">
+      <h2>Other Characters</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Character</th>
+            <th>Connection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Herbert Head</td>
+            <td>Connected to Caddy.</td>
+          </tr>
+          <tr>
+            <td>Dalton Ames</td>
+            <td>Connected to Caddy.</td>
+          </tr>
+          <tr>
+            <td>Charlie</td>
+            <td>A young man associated with Caddy.</td>
+          </tr>
+          <tr>
+            <td>Shreve McCannon</td>
+            <td>Quentin's roommate at Harvard.</td>
+          </tr>
+          <tr>
+            <td>Gerald Bland</td>
+            <td>A student Quentin encounters at Harvard.</td>
+          </tr>
+          <tr>
+            <td>Mr. and Mrs. Patterson</td>
+            <td>Neighbors connected to Uncle Maury.</td>
+          </tr>
+          <tr>
+            <td>Reverend Shegog</td>
+            <td>A visiting preacher.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="similar-names" class="mt-5"></section>
+      <h2>Similar Names</h2>
+      <ul>
+        <li>Jason Compson III is the father; Jason Compson IV is his son.</li>
+        <li>Quentin Compson and Miss Quentin are different characters.</li>
+        <li>Uncle Maury Bascomb and Benjy's original name are connected, but they are different people.</li>
+      </ul>
+    </section>
+
+    <section id="family-trees" class="mt-5">
+      <h2>Compson Family Tree</h2>
+      <div class="family-tree-scroll">
+        <ul class="family-tree" aria-label="Compson family tree">
+          <li>
+            <span class="tree-node female">Damuddy¹</span>
+            <ul>
+              <li class="uncertain-branch">
+                <span class="tree-node uncertain" aria-label="Unknown family connection">?</span>
+                <ul>
+                  <li class="couple-branch">
+                    <div class="couple-node" role="group" aria-label="Jason Compson III and Caroline Bascomb">
+                      <span class="tree-node male">Jason Compson III</span>
+                      <span class="marriage-link" aria-hidden="true"></span>
+                      <span class="tree-node female">Caroline Bascomb</span>
+                    </div>
+                    <ul class="children-generation">
+                      <li><span class="tree-node male">Quentin</span></li>
+                      <li><span class="tree-node female">Caddy</span></li>
+                      <li><span class="tree-node male">Jason IV</span></li>
+                      <li><span class="tree-node male">Benjy</span></li>
+                    </ul>
+                    <ul class="uncertain-generation">
+                      <li>
+                        <span class="tree-node female uncertain">
+                          Miss Quentin²
+                          <span class="tree-note">relationship uncertain</span>
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><span class="tree-node male">Uncle Maury</span></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="footnotes">
+        <p>¹ Damuddy is identified as the Compson children's grandmother,
+          but the novel doesn't specify whether she is Caroline's mother
+          or Jason's mother.
+        </p>
+        <p>² Miss Quentin is a younger member of the Compson family;
+        exact connection omitted to avoid spoilers.
+        </p>
+      </div>
+    </section>
+
+  <section id="family-trees2" class="mt-5">
+      <h2>Gibson Family Tree</h2>
+      <div class="family-tree-scroll">
+        <ul class="family-tree" aria-label="Gibson family tree">
+          <li>
+            <div class="couple-node" role="group" aria-label="Dilsey and Roskus">
+              <span class="tree-node female">Dilsey</span>
+              <span class="marriage-link" aria-hidden="true"></span>
+              <span class="tree-node male">Roskus</span>
+            </div>
+            <ul class="children-generation">
+              <li><span class="tree-node male">Versh</span></li>
+              <li>
+                <span class="tree-node female">Frony</span>
+                <ul>
+                  <li><span class="tree-node male">Luster</span></li>
+                </ul>
+              </li>
+              <li><span class="tree-node male">T.P.</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+  </section>
+
+    <section class="mt-5 text-center">
+      <button type="button" class="btn btn-dark" id="portrait-toggle"
+              aria-expanded="false" aria-controls="family-portraits">
+        Reveal AI Generated Family Portraits...
+      </button>
+      <div id="family-portraits" hidden>
+        <div class="row g-4 mt-2">
+          <figure class="col-md-6">
+            <img src="images/compson.png" class="img-fluid rounded" alt="AI-generated portrait of the Compson family">
+            <figcaption class="mt-2">The Compson Family</figcaption>
+          </figure>
+          <figure class="col-md-6">
+            <img src="images/gibson.jpg" class="img-fluid rounded" alt="AI-generated portrait of the Gibson family">
+            <figcaption class="mt-2">The Gibson Family</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const portraitToggle = document.getElementById('portrait-toggle');
+    const familyPortraits = document.getElementById('family-portraits');
+    portraitToggle.addEventListener('click', () => {
+      familyPortraits.hidden = !familyPortraits.hidden;
+      portraitToggle.setAttribute('aria-expanded', String(!familyPortraits.hidden));
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
